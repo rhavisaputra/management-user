@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} - {{ subtitle }}{% endblock %}
+{% block specificstylesheets %}
+	<link rel="stylesheet" href="/assets/css/user.css">
+{% endblock %}
+{% block specifictopjavascript %}
+	<script src="/assets/js/user.js" defer></script>
+{% endblock %}
+{% block optional %}{% endblock %}
+{% block globalpagecontent %}
+	{{ include('layout/header.html.twig') }}
+{% endblock %}
+
+{% block specificpagecontenttop %}{% endblock %}
+{% block specificpagecontentmid %}
+	<div class="container pt-2">
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<h1 class="text-center">{{ title }}</h1>
+				<div class="table-responsive">
+					<table id="user" class="table table-dark table-striped">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Name</th>
+								<th class="text-center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if users %}
+								{% for item in users %}
+								<tr>
+									<td>{{ item.id }}</td>
+									<td>{{ item.name }}</td>
+									<td class="text-center">
+										<a href="/user/{{ item.id }}" class="btn btn-primary" role="button">View</a>
+										<a href="/user/edit/{{ item.id }}" class="btn btn-warning" role="button">Edit</a>
+										<button type="button" class="btn btn-danger" id="delete-user" data-id="{{item.id}}">Delete</a>
+									</td>
+								</tr>
+								{% endfor %}
+							{% else %}
+								<tr>
+									<td colspan="4" class="text-center">Empty Data</td>
+								</tr>
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</button>
+	</div>
+{% endblock %}
+{% block specificpagecontentbot %}
+	{{ include('layout/footer.html.twig') }}
+{% endblock %}
+
+{% block specificbottomjavascript %}{% endblock %}
