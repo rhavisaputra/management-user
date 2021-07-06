@@ -2,7 +2,7 @@
 
 namespace App\Controller\account;
 
-use App\Entity\User;
+use App\Entity\Users;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,9 +20,9 @@ class RegisterController extends AbstractController
      */
     public function create(Request $request)
     {
-        $user = new User();
+        $users = new Users();
 
-        $form = $this->createFormBuilder($user)
+        $form = $this->createFormBuilder($users)
             ->add('name', TextType::class, [
                 'attr' => ['class' => 'form-control mb-2']
             ])
@@ -41,10 +41,10 @@ class RegisterController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $user = $form->getData();
+                $users = $form->getData();
 
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
+                $entityManager->persist($users);
                 $entityManager->flush();
 
                 return $this->redirectToRoute('login');

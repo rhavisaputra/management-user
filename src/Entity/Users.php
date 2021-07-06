@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
+ * @ORM\Entity(repositoryClass=UsersRepository::class)
  */
-class User
+class Users
 {
     /**
      * @ORM\Id
@@ -19,20 +18,19 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(type="string", length=30)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=40)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=50)
      */
     private $password;
-
 
     public function getId(): ?int
     {

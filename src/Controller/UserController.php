@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\Users;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,13 +20,20 @@ class UserController extends AbstractController
      */
     public function index(): Response
     {
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $defaultcontroller = new DefaultController();
+        $checksession = $defaultcontroller->checkSession();
 
-        return $this->render('user/index.html.twig', [
-            'title' => 'LIST',
-            'subtitle' => 'MANAGEMENT USER',
-            'users' => $users,
-        ]);
+        if ($checksession == null || $checksession == "") {
+            return $this->redirectToRoute('plogout');
+        } else {
+            $users = $this->getDoctrine()->getRepository(Users::class)->findAll();
+
+            return $this->render('user/index.html.twig', [
+                'title' => 'LIST',
+                'subtitle' => 'MANAGEMENT USER',
+                'users' => $users,
+            ]);
+        }
     }
     
     /**
@@ -34,13 +41,20 @@ class UserController extends AbstractController
      */
     public function detail($id): Response
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $defaultcontroller = new DefaultController();
+        $checksession = $defaultcontroller->checkSession();
 
-        return $this->render('user/detail.html.twig', [
-            'title' => 'DETAIL LIST',
-            'subtitle' => 'MANAGEMENT USER',
-            'user' => $user,
-        ]);
+        if ($checksession == null || $checksession == "") {
+            return $this->redirectToRoute('plogout');
+        } else {
+            $user = $this->getDoctrine()->getRepository(Users::class)->find($id);
+
+            return $this->render('user/detail.html.twig', [
+                'title' => 'DETAIL LIST',
+                'subtitle' => 'MANAGEMENT USER',
+                'user' => $user,
+            ]);
+        }
     }
 
     /**
@@ -48,36 +62,43 @@ class UserController extends AbstractController
     */
     public function update(Request $request, $id)
     {
-        $user = new User();
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $defaultcontroller = new DefaultController();
+        $checksession = $defaultcontroller->checkSession();
 
-        $form = $this->createFormBuilder($user)
-            ->add('name', TextType::class, [
-                'attr' => ['class' => 'form-control mb-2']
-            ])
-            ->add('email', EmailType::class, [
-                'attr' => ['class' => 'form-control mb-2']
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Update',
-                'attr' => ['class' => 'btn btn-primary mt-3']
-            ])
-            ->getForm();
+        if ($checksession == null || $checksession == "") {
+            return $this->redirectToRoute('plogout');
+        } else {
+            $user = new Users();
+            $user = $this->getDoctrine()->getRepository(Users::class)->find($id);
 
-            $form->handleRequest($request);
+            $form = $this->createFormBuilder($user)
+                ->add('name', TextType::class, [
+                    'attr' => ['class' => 'form-control mb-2']
+                ])
+                ->add('email', EmailType::class, [
+                    'attr' => ['class' => 'form-control mb-2']
+                ])
+                ->add('save', SubmitType::class, [
+                    'label' => 'Update',
+                    'attr' => ['class' => 'btn btn-primary mt-3']
+                ])
+                ->getForm();
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->flush();
+                $form->handleRequest($request);
 
-                return $this->redirectToRoute('user');
-            }
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->flush();
 
-        return $this->render('user/edit.html.twig', [
-            'title' => 'UPDATE USER',
-            'subtitle' => 'MANAGEMENT USER',
-            'form' => $form->createView(),
-        ]);
+                    return $this->redirectToRoute('user');
+                }
+
+            return $this->render('user/edit.html.twig', [
+                'title' => 'UPDATE USER',
+                'subtitle' => 'MANAGEMENT USER',
+                'form' => $form->createView(),
+            ]);
+        }
     }
 
     /**
@@ -85,12 +106,19 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, $id)
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($user);
-        $entityManager->flush();
+        $defaultcontroller = new DefaultController();
+        $checksession = $defaultcontroller->checkSession();
 
-        return $this->send();
+        if ($checksession == null || $checksession == "") {
+            return $this->redirectToRoute('plogout');
+        } else {
+            $user = $this->getDoctrine()->getRepository(Users::class)->find($id);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
+
+            return $this->send();
+        }
     }
 
     // /**
@@ -100,7 +128,7 @@ class UserController extends AbstractController
     // {
     //     $entityManager = $this->getDoctrine()->getManager();
 
-    //     $users = new User();
+    //     $users = new Users();
     //     $users->setName('User3');
     //     $users->setEmail('user3@email.com');
     //     $users->setPassword('123');

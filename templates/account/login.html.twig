@@ -9,23 +9,29 @@
 {% endblock %}
 {% block optional %}{% endblock %}
 {% block globalpagecontent %}
-	{{ include('layout/header.html.twig') }}
+	{# {{ include('layout/header.html.twig') }} #}
 {% endblock %}
 
 {% block specificpagecontenttop %}{% endblock %}
 {% block specificpagecontentmid %}
 	<div class="container pt-2">
 		<div class="row justify-content-center">
-			<div class="col-lg-5">
-				<h1 class="text-center">{{ title }}</h1>
-				<form class="form" action="/">
+			<div class="col-lg-5 mt-5">
+				<h1 class="text-center mb-4">{{ title }}</h1>
+				{% if app.request.get('resultlogin') %}
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+					{{ app.request.get('resultlogin') }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+				{% endif %}
+				<form class="form" action="/process/plogin" method="post">
 					<div>
-						<label for="form_email" class="required">Email</label>
-						<input type="email" id="form_email" name="form_email" required="required" class="form-control mb-2">
+						<label for="email" class="required">Email</label>
+						<input type="email" id="email" name="email" class="form-control mb-2" required="required">
 					</div>
 					<div>
-						<label for="form_password" class="required">Password</label>
-						<input type="password" id="form_password" name="form_password" required="required" class="form-control mb-3">
+						<label for="password" class="required">Password</label>
+						<input type="password" id="password" name="password" class="form-control mb-3" required="required">
 					</div>
 					<button type="submit" class="btn btn-primary mt-2">Login</button>
 				</form>
