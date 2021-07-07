@@ -51,10 +51,11 @@ class PloginController extends AbstractController
 		// RESULT LOGIN
         // 0 = success
         // 1 = failed -> More than one user found
-        // 2 = failed -> Email Not Found
+        // 2 = failed -> User Not Found
         // 3 = failed -> Invalid Password
 
 		if ($countchecklogin == 1) {
+			$resultname = $checklogin[0]['name'];
 			$resultemail = $checklogin[0]['email'];
 			$resultpassword = $checklogin[0]['password'];
 
@@ -73,10 +74,13 @@ class PloginController extends AbstractController
 		if ($resultlogin == 0) {
 			if ($checksession == null || $checksession == "") {
 				$startsession->set('isLoggedin', 1);
+				$startsession->set('name', $resultname);
 				$startsession->set('email', $resultemail);
 				/*
 				echo "<pre>";
 				echo $startsession->get('isLoggedin');
+				echo "<br>";
+				echo $startsession->get('name');
 				echo "<br>";
 				echo $startsession->get('email');
 				echo "</pre>";

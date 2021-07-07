@@ -1,3 +1,5 @@
+console.log('Test user')
+
 const user = document.getElementById('user')
 
 if (user) {

@@ -2,22 +2,20 @@
 
 {% block title %}{{ title }} - {{ subtitle }}{% endblock %}
 {% block specificstylesheets %}
-	<link rel="stylesheet" href="/assets/css/account/register.css">
+	<link rel="stylesheet" href={{ asset("/assets/css/account/register.css") }}>
 {% endblock %}
 {% block specifictopjavascript %}
-	<script src="/assets/js/account/register.js" defer></script>
+	<script src={{ asset("/assets/js/account/register.js") }} defer></script>
 {% endblock %}
 {% block optional %}{% endblock %}
-{% block globalpagecontent %}
-	{# {{ include('layout/header.html.twig') }} #}
-{% endblock %}
+{% block globalpagecontent %}{% endblock %}
 
 {% block specificpagecontenttop %}{% endblock %}
 {% block specificpagecontentmid %}
 	<div class="container pt-2">
 		<div class="row justify-content-center">
 			<div class="col-lg-5 mt-5">
-				<h1 class="text-center mb-4">{{ title }}</h1>
+				<h1 class="text-center ffgg mb-4">{{ title }}</h1>
 				{{ form_start(form) }}
 				{{ form_widget(form) }}
 				{{ form_end(form) }}
@@ -26,8 +24,6 @@
 		</div>
 	</div>
 {% endblock %}
-{% block specificpagecontentbot %}
-	{{ include('layout/footer.html.twig') }}
-{% endblock %}
+{# {% block specificpagecontentbot %}{% endblock %} #}
 
 {% block specificbottomjavascript %}{% endblock %}

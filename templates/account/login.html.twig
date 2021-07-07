@@ -2,15 +2,13 @@
 
 {% block title %}{{ title }} - {{ subtitle }}{% endblock %}
 {% block specificstylesheets %}
-	<link rel="stylesheet" href="/assets/css/account/login.css">
+	<link rel="stylesheet" href={{ asset("/assets/css/account/login.css") }}>
 {% endblock %}
 {% block specifictopjavascript %}
-	<script src="/assets/js/account/login.js" defer></script>
+	<script src={{ asset("/assets/js/account/login.js") }} defer></script>
 {% endblock %}
 {% block optional %}{% endblock %}
-{% block globalpagecontent %}
-	{# {{ include('layout/header.html.twig') }} #}
-{% endblock %}
+{% block globalpagecontent %}{% endblock %}
 
 {% block specificpagecontenttop %}{% endblock %}
 {% block specificpagecontentmid %}
@@ -20,7 +18,13 @@
 				<h1 class="text-center mb-4">{{ title }}</h1>
 				{% if app.request.get('resultlogin') %}
 				<div class="alert alert-warning alert-dismissible fade show" role="alert">
-					{{ app.request.get('resultlogin') }}
+					{% if app.request.get('resultlogin') == 1 %}
+						More than one user found
+					{% elseif app.request.get('resultlogin') == 2 %}
+						User Not Found
+					{% else %}
+						Invalid Password
+					{% endif %}
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				</div>
 				{% endif %}
@@ -40,8 +44,6 @@
 		</div>
 	</div>
 {% endblock %}
-{% block specificpagecontentbot %}
-	{{ include('layout/footer.html.twig') }}
-{% endblock %}
+{# {% block specificpagecontentbot %}{% endblock %} #}
 
 {% block specificbottomjavascript %}{% endblock %}

@@ -2,15 +2,14 @@
 
 {% block title %}{{ title }} - {{ subtitle }}{% endblock %}
 {% block specificstylesheets %}
-	<link rel="stylesheet" href="/assets/css/user.css">
+	<link rel="stylesheet" href={{ asset("/assets/css/user.css") }}>
 {% endblock %}
 {% block specifictopjavascript %}
-	<script src="/assets/js/user.js" defer></script>
+	<script src={{ asset("/assets/js/user.js") }} defer></script>
 {% endblock %}
 {% block optional %}{% endblock %}
-{% block globalpagecontent %}
-	{{ include('layout/header.html.twig') }}
-{% endblock %}
+{# {% block globalpagecontent %}{% endblock %} #}
+{% block userlogin %}{{ userlogin }}{% endblock %}
 
 {% block specificpagecontenttop %}{% endblock %}
 {% block specificpagecontentmid %}
@@ -52,8 +51,6 @@
 		</button>
 	</div>
 {% endblock %}
-{% block specificpagecontentbot %}
-	{{ include('layout/footer.html.twig') }}
-{% endblock %}
+{# {% block specificpagecontentbot %}{% endblock %} #}
 
 {% block specificbottomjavascript %}{% endblock %}

@@ -21,6 +21,7 @@ class UserController extends AbstractController
     public function index(): Response
     {
         $defaultcontroller = new DefaultController();
+        $startsession = $defaultcontroller->startSession();
         $checksession = $defaultcontroller->checkSession();
 
         if ($checksession == null || $checksession == "") {
@@ -32,6 +33,7 @@ class UserController extends AbstractController
                 'title' => 'LIST',
                 'subtitle' => 'MANAGEMENT USER',
                 'users' => $users,
+                'userlogin' => $startsession->get('name'),
             ]);
         }
     }
@@ -42,6 +44,7 @@ class UserController extends AbstractController
     public function detail($id): Response
     {
         $defaultcontroller = new DefaultController();
+        $startsession = $defaultcontroller->startSession();
         $checksession = $defaultcontroller->checkSession();
 
         if ($checksession == null || $checksession == "") {
@@ -53,6 +56,7 @@ class UserController extends AbstractController
                 'title' => 'DETAIL LIST',
                 'subtitle' => 'MANAGEMENT USER',
                 'user' => $user,
+                'userlogin' => $startsession->get('name'),
             ]);
         }
     }
@@ -63,6 +67,7 @@ class UserController extends AbstractController
     public function update(Request $request, $id)
     {
         $defaultcontroller = new DefaultController();
+        $startsession = $defaultcontroller->startSession();
         $checksession = $defaultcontroller->checkSession();
 
         if ($checksession == null || $checksession == "") {
@@ -97,6 +102,7 @@ class UserController extends AbstractController
                 'title' => 'UPDATE USER',
                 'subtitle' => 'MANAGEMENT USER',
                 'form' => $form->createView(),
+                'userlogin' => $startsession->get('name'),
             ]);
         }
     }
