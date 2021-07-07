@@ -27,7 +27,19 @@ class UserController extends AbstractController
         if ($checksession == null || $checksession == "") {
             return $this->redirectToRoute('plogout');
         } else {
-            $users = $this->getDoctrine()->getRepository(Users::class)->findAll();
+            # USING QUERY BUILDER
+            // $users = $this->getDoctrine()->getRepository(Users::class)->findAll();
+            
+            # USING RAW QUERY
+            $dbconnection = $this->getDoctrine()->getConnection();
+            
+            $querycheckselect = "
+                SELECT * FROM users
+            ";
+            $stmtcheckselect = $dbconnection->prepare($querycheckselect);
+            $stmtcheckselect->execute();
+
+            $users = $stmtcheckselect->fetchAll();
 
             return $this->render('user/index.html.twig', [
                 'title' => 'LIST',

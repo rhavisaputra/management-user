@@ -17,7 +17,7 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-5">
 				<h1 class="text-center">{{ title }}</h1>
-				<form class="form" action="/user/edit/{{ form[0]['id'] }}" method="POST">
+				<form class="form" action="/process/puser_update/{{ form[0]['id'] }}" method="POST">
 					<div>
 						<label for="id" class="required">Id</label>
 						<input type="text" id="id" name="id" value={{ form[0]['id'] }} placeholder="0123" class="form-control mb-2" required disabled>
@@ -30,7 +30,7 @@
 						<label for="email" class="required">Email</label>
 						<input type="email" id="email" name="email" value={{ form[0]['email'] }} placeholder="user@email.com" class="form-control mb-2" required>
 					</div>
-					<button type="submit" class="btn btn-primary mt-2" disabled>Update</button>
+					<button type="submit" class="btn btn-primary mt-2">Update</button>
 				</form>
 				<a href={{ path("user") }}>Back</a>
 			</div>
