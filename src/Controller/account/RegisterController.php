@@ -24,10 +24,16 @@ class RegisterController extends AbstractController
 
         $form = $this->createFormBuilder($users)
             ->add('name', TextType::class, [
-                'attr' => ['class' => 'form-control mb-2']
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                    'placeholder' => 'User One'
+                ]
             ])
             ->add('email', EmailType::class, [
-                'attr' => ['class' => 'form-control mb-2']
+                'attr' => [
+                    'class' => 'form-control mb-2',
+                    'placeholder' => 'user@email.com'
+                ]
             ])
             ->add('password', PasswordType::class, [
                 'attr' => ['class' => 'form-control mb-2']

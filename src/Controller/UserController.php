@@ -62,9 +62,9 @@ class UserController extends AbstractController
     }
 
     /**
-    * @Route("/user/edit/{id}", methods={"GET","POST"}, name="user_update")
+    * @Route("/user/edit/{id}", methods={"GET"}, name="user_update")
     */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): Response
     {
         $defaultcontroller = new DefaultController();
         $startsession = $defaultcontroller->startSession();
@@ -73,35 +73,22 @@ class UserController extends AbstractController
         if ($checksession == null || $checksession == "") {
             return $this->redirectToRoute('plogout');
         } else {
-            $user = new Users();
-            $user = $this->getDoctrine()->getRepository(Users::class)->find($id);
+            $dbconnection = $this->getDoctrine()->getConnection();
+            
+            // GET USER
+            $querycheckselect = "
+                SELECT * FROM users WHERE id = :id
+            ";
+            $stmtcheckselect = $dbconnection->prepare($querycheckselect);
+            $stmtcheckselect->bindParam(':id', $id);
+            $stmtcheckselect->execute();
 
-            $form = $this->createFormBuilder($user)
-                ->add('name', TextType::class, [
-                    'attr' => ['class' => 'form-control mb-2']
-                ])
-                ->add('email', EmailType::class, [
-                    'attr' => ['class' => 'form-control mb-2']
-                ])
-                ->add('save', SubmitType::class, [
-                    'label' => 'Update',
-                    'attr' => ['class' => 'btn btn-primary mt-3']
-                ])
-                ->getForm();
-
-                $form->handleRequest($request);
-
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $entityManager->flush();
-
-                    return $this->redirectToRoute('user');
-                }
-
+            $checkselect = $stmtcheckselect->fetchAll();
+            
             return $this->render('user/edit.html.twig', [
                 'title' => 'UPDATE USER',
                 'subtitle' => 'MANAGEMENT USER',
-                'form' => $form->createView(),
+                'form' => $checkselect,
                 'userlogin' => $startsession->get('name'),
             ]);
         }
