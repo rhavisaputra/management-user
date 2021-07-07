@@ -47,7 +47,7 @@
                                 </li>
                             </ul>
                             <span class="navbar-text">
-                                Welcome, {% block userlogin %}User{% endblock %} | <a href="/process/plogout">Logout</a>
+                                Welcome, {% block userlogin %}User{% endblock %} | <a href={{ path("plogout") }}>Logout</a>
                             </span>
                         </div>
                     </div>
