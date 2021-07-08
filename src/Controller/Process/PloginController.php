@@ -59,7 +59,7 @@ class PloginController extends AbstractController
 			$resultemail = $checklogin[0]['email'];
 			$resultpassword = $checklogin[0]['password'];
 
-			if ($resultpassword == $password) {
+			if ($resultpassword == $md5password) {
 				$resultlogin = 0;
 			} else {
 				$resultlogin = 3;

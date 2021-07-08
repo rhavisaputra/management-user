@@ -16,9 +16,21 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-5 mt-5">
 				<h1 class="text-center ffgg mb-4">{{ title }}</h1>
-				{{ form_start(form) }}
-				{{ form_widget(form) }}
-				{{ form_end(form) }}
+				<form class="form" action={{ path("pregister") }} method="post">
+					<div>
+						<label for="name" class="required">Name</label>
+						<input type="text" id="name" name="name" placeholder="User One" class="form-control mb-2" required="required">
+					</div>
+					<div>
+						<label for="email" class="required">Email</label>
+						<input type="email" id="email" name="email" placeholder="user@email.com" class="form-control mb-2" required="required">
+					</div>
+					<div>
+						<label for="password" class="required">Password</label>
+						<input type="password" id="password" name="password" class="form-control mb-3" required="required">
+					</div>
+					<button type="submit" class="btn btn-warning mt-2">Register</button>
+				</form>
 				<a href={{ path("login") }}>Login</a>
 			</div>
 		</div>
